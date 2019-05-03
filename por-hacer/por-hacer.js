@@ -23,7 +23,6 @@ const cargarDB = () => {
 const crear = (descripcion) => {
 
     cargarDB();
-
     let porHacer = {
         descripcion,
         completado: false
@@ -33,6 +32,31 @@ const crear = (descripcion) => {
     return porHacer
 }
 
+const getListado = () => {
+
+    cargarDB();
+    return listadoPorHacer;
+}
+
+const actualizar = (descripcion, completado = true) => {
+
+    cargarDB();
+
+    let index = listadoPorHacer.findIndex(tarea => {
+        return tarea.descripcion === descripcion
+    })
+
+    if (index >= 0) {
+        listadoPorHacer[index].completado = completado;
+        guardarDB();
+        return true;
+    } else {
+        false;
+    }
+}
+
 module.exports = {
-    crear
+    crear,
+    getListado,
+    actualizar
 }
